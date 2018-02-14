@@ -26,6 +26,12 @@ if config.APPLICATION_STATE_EXTENSION is not None:
 EXTENSIONS = config.PLUGIN_STATE_EXTENSIONS + extension_list
 PLUGINS_WLIST = config.PLUGINS_WLIST
 APPLICATION_WLIST = config.APPLICATION_WLIST
+DEPRECATION_MESSAGE = ("\rThe extension of the file you are attempting to load,"
+                       " {}, suggests the data set might not be fully reduced. "
+                       "Support for the reader associated with this file type h"
+                       "as been removed. SasView can attempt to load this data "
+                       "set, but cannot guarantee the accuracy of the data. Do "
+                       "you want to continue loading this file?")
 
 
 class Plugin(PluginBase):
@@ -177,12 +183,7 @@ class Plugin(PluginBase):
                     continue
             if any(p_file.lower().endswith(ext) for ext in
                    self.deprecated_extensions):
-                msg = ("\rThe extension of the file you are attempting to load,"
-                       " {}, suggests the data set might be fully reduced. Sup"
-                       "port for the reader associated with this file has been "
-                       "removed. SasView can attempt to load this data set, but"
-                       " cannot guarantee the accuracy of the data. Do you want"
-                       " to attempt loading this file?").format(basename)
+                msg = DEPRECATION_MESSAGE.format(basename)
                 msg_box = wx.MessageDialog(None, msg, 'Warning',
                                            wx.OK | wx.CANCEL)
                 if msg_box.ShowModal() == wx.ID_CANCEL:
