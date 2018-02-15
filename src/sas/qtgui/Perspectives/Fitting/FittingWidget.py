@@ -1157,7 +1157,7 @@ class FittingWidget(QtWidgets.QWidget, Ui_FittingWidgetUI):
         self.setFittingStopped()
 
         #assert result is not None
-        if assert in None:
+        if result is None:
             msg = "Fitting failed after: %s s.\n" % GuiUtils.formatNumber(elapsed)
             self.communicate.statusBarUpdateSignal.emit(msg)
             return
